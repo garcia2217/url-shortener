@@ -46,6 +46,9 @@ async def redirect_to_target(
     """
     # 1. Try to get from Redis
     cached_url = await cache.get(short_code)
+    
+    await cache.incr(f"clicks:{short_code}") 
+    
     if cached_url:
         print("--- CACHE HIT ---")
         return RedirectResponse(url=cached_url)

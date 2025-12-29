@@ -1,4 +1,4 @@
-from sqlalchemy import BigInteger, String, DateTime, func
+from sqlalchemy import BigInteger, String, DateTime, func, Integer, text
 from sqlalchemy.orm import Mapped, mapped_column
 from .database import Base
 import datetime
@@ -14,7 +14,9 @@ class URL(Base):
     
     # The Base62 code (e.g., 'sG1')
     short_code: Mapped[str] = mapped_column(String, unique=True, index=True, nullable=False)
-    
+
+    clicks: Mapped[int] = mapped_column(server_default=text("0"), nullable=False)
+
     created_at: Mapped[datetime.datetime] = mapped_column(
         DateTime(timezone=True), 
         server_default=func.now()
